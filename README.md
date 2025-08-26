@@ -25,3 +25,13 @@ Study for K6 test
 - synchronized
   - vs CAS
   - 왜 현업에선 잘 안쓰이는지
+
+## 8/26 - 일단 지금은 다른 프로젝트에서 K6써볼 기회가 생겨서 그 공부중
+- WebRTC
+  - P2P를 통한 음성 통화 기능 구현 필요
+  - 주요 용어
+    - 시그널링
+    - SDP
+    - ICE
+      - STUN
+      - TURN

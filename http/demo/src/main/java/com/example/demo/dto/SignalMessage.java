@@ -6,44 +6,19 @@ public class SignalMessage {
     private String receiver;
     private String content;
 
+    // 👇 이거 필수!
     public SignalMessage() {}
 
-    public SignalMessage(String type, String sender, String receiver, String content) {
-        this.type = type;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.content = content;
-    }
+    // 👇 getter/setter 없으면 Jackson이 JSON → Java 매핑 못함
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 
-    public String getType() {
-        return type;
-    }
+    public String getSender() { return sender; }
+    public void setSender(String sender) { this.sender = sender; }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public String getReceiver() { return receiver; }
+    public void setReceiver(String receiver) { this.receiver = receiver; }
 
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 }

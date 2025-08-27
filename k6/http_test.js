@@ -2,37 +2,44 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export const options = {
-    vus: 10,               // 동시에 요청할 가상 사용자 수
-    duration: '30s',       // 테스트 실행 시간
+    vus: 100,
+    duration: '30s',
 };
 
+const userIds = [...Array(100)].map((_, i) => `user${i}`);
+
 export default function () {
-    // 1. POST 요청으로 메시지 전송
-    const payload = JSON.stringify({
-        type: 'offer',
-        sender: `user-${__VU}`,      // 가상 사용자 ID별 고유 이름
-        receiver: `user-${(__VU % 5) + 1}`, // 수신자는 1~5번 사용자 중 하나
-        content: 'This is a signaling message for testing.'
-    });
+    const senderIndex = __VU - 1;
+    const senderId = userIds[senderIndex];
+    const receiverId = userIds[(senderIndex + 1) % userIds.length];
 
     const headers = { 'Content-Type': 'application/json' };
+
+    // 1. POST: 메시지 전송
+    const payload = JSON.stringify({
+        type: 'offer',
+        sender: senderId,
+        receiver: receiverId,
+        content: `message from ${senderId} to ${receiverId}`,
+    });
 
     const postRes = http.post('http://localhost:8080/signal/send', payload, { headers });
 
     check(postRes, {
         'POST /signal/send status is 200': (res) => res.status === 200,
-        'Message stored': (res) => res.body.includes('received'),
+        'POST succeeded': (res) => res.body && res.body.includes('received'),
     });
 
     sleep(1);
 
-    // 2. GET 요청으로 메시지 수신 (수신자 역할 수행)
-    const receiver = `user-${(__VU % 5) + 1}`;
-    const getRes = http.get(`http://localhost:8080/signal/receive?receiver=${receiver}`);
+    // 2. GET: 메시지 수신
+    const getRes = http.get(`http://localhost:8080/signal/receive?receiver=${receiverId}`);
 
     check(getRes, {
         'GET /signal/receive status is 200': (res) => res.status === 200,
     });
+
+    console.log(`📨 [${senderId}] sent to [${receiverId}] / Received: ${getRes.body}`);
 
     sleep(1);
 }

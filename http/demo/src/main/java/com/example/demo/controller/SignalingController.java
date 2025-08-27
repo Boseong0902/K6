@@ -16,7 +16,7 @@ public class SignalingController {
     @PostMapping("/send")
     public ResponseEntity<String> sendSignal(@RequestBody SignalMessage message) {
         signalingService.storeMessage(message);
-        return ResponseEntity.ok("Message stored");
+        return ResponseEntity.ok("stored");
     }
 
     @GetMapping("/receive")

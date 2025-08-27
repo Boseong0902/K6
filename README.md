@@ -35,3 +35,6 @@ Study for K6 test
     - ICE
       - STUN
       - TURN
+
+## 8/27 - 오늘은 Websocket, Firebase, Http로 각각 시그널링 서버를 구축하고 K6로 테스트해서 비교해볼 생각이다
+- 

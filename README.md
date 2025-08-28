@@ -37,4 +37,6 @@ Study for K6 test
       - TURN
 
 ## 8/27 - 오늘은 Websocket, Firebase, Http로 각각 시그널링 서버를 구축하고 K6로 테스트해서 비교해볼 생각이다
-- 
+- Websocket, Http 구축 및 K6스크립트 작성 완료
+
+## 8/28 - 실시간 데이터베이스 공부중
